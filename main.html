@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>📢 ระบบบันทึกข้อมูลการรับส่งเวร ศูนย์นนทบุรี</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f2f9ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .form-container {
+      background: #ffffff;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .header {
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      border-radius: 10px 10px 0 0;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-group .btn {
+      width: 100%;
+    }
+    .form-check { margin-bottom: 0; }
+    footer {
+      text-align: center;
+      color: #999;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .blink {
+      animation: blink 0.7s step-end infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="header">
+      <h4>📅 ระบบบันทึกข้อมูลการรับส่งเวร</h4>
+      <small>ศูนย์นนทบุรี</small>
+    </div>
+
+    <form id="shiftForm">
+
+      <div class="mb-3">
+        <label class="form-label">ชื่อคนตรวจ</label>
+        <select class="form-select" name="inspector" id="inspector" required>
+          <option selected disabled>เลือกชื่อคนตรวจ</option>
+          <option>ระดมบุญ</option>
+          <option>ฉัตรชัย</option>
+          <option>จักรี</option>
+          <option>เจตน์</option>
+          <option>ทรงศักดิ์</option>
+          <option>สิริพงษ์</option>
+          <option>นิวัฒน์</option>
+          <option>ธีรักชาติ</option>
+          <option>เสน่ห์</option>
+          <option>ลาภชนก</option>
+          <option>สิทธิพงษ์</option>
+          <option>ภาคภูมิ</option>
+          <option>อานุภาพ</option>
+          <option>นพนัฐ</option>
+          <option>สรพล</option>
+          <option>ธนกร</option>
+        </select>
+      </div>
+      <div id="alert-person" style="color:red; display:none; margin-bottom:8px;">
+        กรุณาเลือกชื่อคนตรวจและชื่อคนรับกะ
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">ชื่อคนรับกะ</label>
+        <select class="form-select" name="receiver" id="receiver" required>
+          <option selected disabled>เลือกชื่อคนรับกะ</option>
+          <option>ระดมบุญ</option>
+          <option>ฉัตรชัย</option>
+          <option>จักรี</option>
+          <option>เจตน์</option>
+          <option>ทรงศักดิ์</option>
+          <option>สิริพงษ์</option>
+          <option>นิวัฒน์</option>
+          <option>ธีรักชาติ</option>
+          <option>เสน่ห์</option>
+          <option>ลาภชนก</option>
+          <option>สิทธิพงษ์</option>
+          <option>ภาคภูมิ</option>
+          <option>อานุภาพ</option>
+          <option>นพนัฐ</option>
+          <option>สรพล</option>
+          <option>ธนกร</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">ช่วงเวลาที่ตรวจ</label>
+        <div class="btn-group w-100" role="group">
+          <input type="radio" class="btn-check" name="shift" id="morning" value="กะเช้า" required>
+          <label class="btn btn-outline-secondary" for="morning">กะเช้า</label>
+          <input type="radio" class="btn-check" name="shift" id="afternoon" value="กะบ่าย">
+          <label class="btn btn-outline-secondary" for="afternoon">กะบ่าย</label>
+          <input type="radio" class="btn-check" name="shift" id="night" value="กะดึก">
+          <label class="btn btn-outline-secondary" for="night">กะดึก</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">แผนกที่ตรวจ</label>
+        <div class="btn-group w-100" role="group">
+          <input type="radio" class="btn-check" name="department" id="dept1" value="หถก1&2" required>
+          <label class="btn btn-outline-secondary" for="dept1">หถก1&2</label>
+          <input type="radio" class="btn-check" name="department" id="dept2" value="หถก3&4">
+          <label class="btn btn-outline-secondary" for="dept2">หถก3&4</label>
+          <input type="radio" class="btn-check" name="department" id="dept3" value="หถก5&6">
+          <label class="btn btn-outline-secondary" for="dept3">หถก5&6</label>
+        </div>
+      </div>
+      <div id="alert-shift-dept" style="color:red; display:none; margin-bottom:8px;">
+        กรุณาเลือกช่วงเวลาที่ตรวจและแผนกที่ตรวจ
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">รายการที่ต้องตรวจสอบ (ต้องเลือกทุกข้อ)</label>
+        <div id="checklist-group" class="form-check">
+          <input class="form-check-input" type="checkbox" value="Alarm all 202" id="check1" name="checklist">
+          <label class="form-check-label" for="check1">Alarm all 202</label><br>
+          <input class="form-check-input" type="checkbox" value="RTU 104" id="check2" name="checklist">
+          <label class="form-check-label" for="check2">RTU 104</label><br>
+          <input class="form-check-input" type="checkbox" value="VD 1001" id="check3" name="checklist">
+          <label class="form-check-label" for="check3">VD 1001</label><br>
+          <input class="form-check-input" type="checkbox" value="AVC 3000" id="check4" name="checklist">
+          <label class="form-check-label" for="check4">AVC 3000</label><br>
+          <input class="form-check-input" type="checkbox" value="TAG 301" id="check5" name="checklist">
+          <label class="form-check-label" for="check5">TAG 301</label><br>
+          <input class="form-check-input" type="checkbox" value="Low Gas 219" id="check6" name="checklist">
+          <label class="form-check-label" for="check6">Low Gas 219</label><br>
+          <input class="form-check-input" type="checkbox" value="Manual Replace" id="check7" name="checklist">
+          <label class="form-check-label" for="check7">Manual Replace</label><br>
+          <input class="form-check-input" type="checkbox" value="BESS trip" id="check8" name="checklist">
+          <label class="form-check-label" for="check8">BESS trip</label><br>
+          <input class="form-check-input" type="checkbox" value="Logbook web" id="check9" name="checklist">
+          <label class="form-check-label" for="check9">Logbook web</label>
+        </div>
+        <div id="checklist-alert" style="color:red; display:none; margin-top:8px;">
+          check หัวข้อที่ตรวจให้ครบทุกข้อ
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">เกี่ยวกับ Switching Order ค้างยังไม่เสร็จ</label>
+        <textarea class="form-control" name="switchingOrder" id="switchingOrder"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">ปัญหาที่พบ</label>
+        <textarea class="form-control" name="issues" id="issues" rows="3" placeholder="กรุณาระบุปัญหาที่พบ (ถ้ามี)"></textarea>
+      </div>
+
+      <a href="issue-form.html" class="btn btn-success mb-2" target="_blank">กรอก ปัญหาระหว่างปฏิบัติงาน</a>
+
+      <a href="view.html" class="btn btn-outline-primary mb-3" target="_blank">ดูข้อมูลทั้งหมด</a>
+
+      <button type="submit" class="btn btn-primary w-100">บันทึกข้อมูล</button>
+
+    </form>
+
+    <footer>
+      📌 2025 EGAT by ระดมบุญ ทักษณา 0644651555
+    </footer>
+  </div>
+
+<script>
+const actionURL = "https://script.google.com/macros/s/AKfycbyu3N-Rj6VeHKoHb0UBJGni9szaYJvfUuiaq8gEw3vNeD5BVqx8OVPkcrvPxt3OpCjQ/exec";
+const telegramToken = "7709409860:AAGOIDX62oLeHEkbC-tAR35Wr05rx-nKSz8";
+const telegramChatId = "8001855532";
+
+document.getElementById('shiftForm').addEventListener('submit', function(e) {
+  let hasError = false;
+
+  const personAlert = document.getElementById('alert-person');
+  const inspector = document.getElementById('inspector').value;
+  const receiver = document.getElementById('receiver').value;
+  if (!inspector || inspector === 'เลือกชื่อคนตรวจ' || !receiver || receiver === 'เลือกชื่อคนรับกะ') {
+    personAlert.style.display = 'block';
+    personAlert.classList.add('blink');
+    hasError = true;
+  } else {
+    personAlert.style.display = 'none';
+    personAlert.classList.remove('blink');
+  }
+
+  const shiftDeptAlert = document.getElementById('alert-shift-dept');
+  const shiftChecked = document.querySelector('input[name="shift"]:checked');
+  const deptChecked = document.querySelector('input[name="department"]:checked');
+  if (!shiftChecked || !deptChecked) {
+    shiftDeptAlert.style.display = 'block';
+    shiftDeptAlert.classList.add('blink');
+    hasError = true;
+  } else {
+    shiftDeptAlert.style.display = 'none';
+    shiftDeptAlert.classList.remove('blink');
+  }
+
+  const checklist = document.querySelectorAll('input[name="checklist"]');
+  let allChecked = true;
+  checklist.forEach(c => { if(!c.checked) allChecked = false; });
+  const alertDiv = document.getElementById('checklist-alert');
+  if(!allChecked) {
+    alertDiv.style.display = 'block';
+    alertDiv.classList.add('blink');
+    hasError = true;
+    window.scrollTo({top: document.getElementById('checklist-group').offsetTop - 30, behavior: 'smooth'});
+  } else {
+    alertDiv.style.display = 'none';
+    alertDiv.classList.remove('blink');
+  }
+
+  if (hasError) {
+    e.preventDefault();
+    return false;
+  }
+
+  if (!hasError) {
+    e.preventDefault();
+
+    const shift = shiftChecked.value;
+    const dept = deptChecked.value;
+    const switchingOrder = document.getElementById('switchingOrder').value;
+    const issues = document.getElementById('issues').value;
+
+    const data = new URLSearchParams({
+      inspector: inspector,
+      receiver: receiver,
+      shift: shift,
+      department: dept,
+      switchingOrder: switchingOrder,
+      issues: issues
+    });
+
+    fetch(actionURL, {
+      method: 'POST',
+      body: data,
+      mode: 'no-cors'
+    })
+    .then(() => {
+      // ส่งข้อความไป Telegram
+      const now = new Date().toLocaleString('th-TH', {
+        timeZone: 'Asia/Bangkok', hour12: false
+      });
+      const message = `📋 บันทึกข้อมูลรับส่งเวร\n🕒 เวลา: ${now}\n👤 ผู้ตรวจ: ${inspector}\n👥 ผู้รับกะ: ${receiver}`;
+      fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: telegramChatId, text: message })
+      });
+
+      alert('บันทึกข้อมูลสำเร็จ!');
+      document.getElementById('shiftForm').reset();
+      personAlert.classList.remove('blink');
+      shiftDeptAlert.classList.remove('blink');
+      alertDiv.classList.remove('blink');
+    })
+    .catch(() => {
+      alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+    });
+  }
+});
+</script>
+
+</body>
+</html>
